@@ -71,30 +71,16 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        // 加速度 ==> 正規化して-1.0 ~ 1.0 ==> 0 ~ 360に変換
-        // a ¥in [-1.0~1.0] ==> (a + 1.0) * 180
         float ax = event.values[0], ay = event.values[1], az = event.values[2];
         vx = alpha * vx + (1 - alpha) * ax;
         vy = alpha * vy + (1 - alpha) * ay;
         vz = alpha * vz + (1 - alpha) * az;
         Log.d(TAG, "(" + vx + ", " + vy + ", " + vz + ")");
-        /*
-        double vs = Math.sqrt(vx*vx + vy*vy + vz*vz);
-        rotationBarX.setProgress((int)(180.0 * (vx/vs + 1.0)));
-        rotationBarY.setProgress((int)(180.0 * (vy/vs + 1.0)));
-        rotationBarZ.setProgress((int)(180.0 * (vz/vs + 1.0)));
-        */
         double theta = Math.atan2(-vx, vy);
         double phi   = Math.atan2(vz, vy);
-        //double roll = Math.atan2(vz, vx);
-        //double pitch = Math.atan2(vy, vz);
-        //double yaw = Math.atan2(vy, vx);
         rotationBarX.setProgress(((int)(phi*180/Math.PI) + 360) % 360);
+        rotationBarY.setProgress(0);
         rotationBarZ.setProgress(((int)(theta*180/Math.PI) + 360) % 360);
-        //rotationBarX.setProgress((int)(-pitch*180/Math.PI) + 180);
-        //rotationBarY.setProgress((int)(roll*180/Math.PI) + 180);
-        //rotationBarZ.setProgress(((int)(yaw*180/Math.PI) + 270) % 360);
-        //Log.d(TAG, "(" + roll + ", " + pitch + ", " + yaw + ")");
     }
 
     @Override

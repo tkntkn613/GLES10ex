@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
         vx = alpha * vx + (1 - alpha) * ax;
         vy = alpha * vy + (1 - alpha) * ay;
         vz = alpha * vz + (1 - alpha) * az;
-        Log.d(TAG, "(" + vx + ", " + vy + ", " + vz + ")");
         double theta = Math.atan2(-vx, vy);
         double phi   = Math.atan2(vz, vy);
         rotationBarX.setProgress(((int)(phi*180/Math.PI) + 360) % 360);
